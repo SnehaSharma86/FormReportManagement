@@ -208,6 +208,14 @@ public class FormApiController : ControllerBase
             "text/csv",
             "FormSubmissions.csv");
     }
+    [HttpGet("health")]
+    public IActionResult Health()
+    {
+        return Ok(new
+        {
+            status = "API is running"
+        });
+    }
 
 
     // GET: api/forms/export/excel
