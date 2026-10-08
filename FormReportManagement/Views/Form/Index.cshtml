@@ -1,0 +1,76 @@
+﻿@model List<FormReportManagement.Models.FormSubmission>
+
+@{
+    ViewData["Title"] = "Form Submissions";
+}
+
+<h1>Form Submissions</h1>
+
+<div style="display: flex; gap: 20px; align-items: center;">
+
+    <a asp-controller="Form" asp-action="Create">
+        Create New Form
+    </a>
+
+    <select id="exportFormat" onchange="exportData()">
+        <option value="">Export Data</option>
+        <option value="pdf">PDF</option>
+        <option value="excel">Excel</option>
+        <option value="csv">CSV</option>
+    </select>
+
+</div>
+
+<br />
+<br />
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var form in Model)
+        {
+            <tr>
+                <td>@form.Id</td>
+                <td>@form.Name</td>
+                <td>@form.Email</td>
+                <td>@form.Phone</td>
+                <td>
+                    <a asp-controller="Form"
+                       asp-action="Edit"
+                       asp-route-id="@form.Id">
+                        Edit
+                    </a>
+                    <form asp-action="Delete" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@form.Id" />
+
+                        <button type="submit">Delete</button>
+                        <button onclick="loadForms()">
+                            Load Forms
+                        </button>
+                        <script src="~/js/site.js"></script>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+
+<h2>API Data</h2>
+
+<button onclick="loadFormsFromApi()">
+    Load Data From API
+</button>
+
+<pre id="apiResult"></pre>
+
+<script src="~/js/site.js"></script>
